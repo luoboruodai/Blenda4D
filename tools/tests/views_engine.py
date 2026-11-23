@@ -6,6 +6,7 @@ from mathutils import Quaternion, Vector
 from blenda4d import views, quadview, viewmenus
 class RV:
     def __init__(s): s.view_rotation=Quaternion((1,0,0,0)); s.view_location=Vector(); s.view_distance=10.0; s.view_perspective="PERSP"; s.lock_rotation=False
+    def as_pointer(s): return id(s)
 class Shade: pass
 class SP:
     def __init__(s): s.region_3d=RV(); s.shading=Shade(); s.overlay=Shade(); s.lens=50.0; s.lock_camera=False
