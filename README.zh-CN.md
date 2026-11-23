@@ -3,8 +3,8 @@
 [English](README.md) | **简体中文**
 
 > **这是 [recon007jf/Blenda4D](https://github.com/recon007jf/Blenda4D) 的社区 fork**：包含一个 bug 修复版本
-> （**0.1.28**）和 **Windows + macOS 一键安装包**。其余内容均为原项目，同为 GPL-3.0 协议。详见
-> [本 fork 的更新](#本-fork-的更新0127)。
+> （**0.2.0**）和 **Windows + macOS 一键安装包**。其余内容均为原项目，同为 GPL-3.0 协议。详见
+> [本 fork 的更新](#本-fork-的更新020)。
 
 Blenda 4D 是一个免费开源的 Blender 插件，为 Blender 带来动态设计（Motion Design）的布局与工作流。
 
@@ -18,24 +18,28 @@ Blenda 4D 用它自己的布局替换 Blender 的编辑器布局：命令栏、�
 它是纯 Python 插件：不需要修改版 Blender，无需编译。凡能运行 Blender 5.2 LTS 及以上版本的平台
 （Mac、Windows、Linux）都能使用。
 
-## 本 fork 的更新（0.1.28）
+## 本 fork 的更新（0.2.0）
 
+- **基于上游 0.1.28 重做。** 上游 0.1.27 与 0.1.28 的全部新功能都在其中：右键菜单、生成器的
+  Make Editable (C)、Current State to Object、带 Align to Spline 的标签页、堆叠可见性圆点、
+  Sculpt 标签、UDIM 图块、位于视口与创建列之间的材质管理器、更安全的面板缩放以及 Windows 崩溃修复。
+  上游官方 0.1.28 构建暂限 Mac/Linux；本 fork 从源码构建，下方一键包同样可装 Windows。
+- **修复：重新启用对象不再使其永久隐藏**（上游回归，已报
+  [PR #35](https://github.com/recon007jf/Blenda4D/pull/35)）。对象管理器里 Enabled 关→开后，对象在
+  视口和渲染中永久隐藏——新的堆叠圆点把总开关自己写入的隐藏误当用户的圆点选择。项目天空测试从
+  11 项失败变为全部通过。
 - **双语界面，跟随 Blender 的语言设置。** 使用 Blender 的简体中文（双语）时，Blenda 4D 自己的界面——
-  菜单、标签、管理器、工具、按钮和提示——现在全部显示 中文 English，与 Blender 自带字典同一风格。
-  约 1,550 条字符串译于 `blenda4d/translations.py`；Blender 字典已覆盖的词条仍由它显示，其他语言不受影响。
-- **一键安装包现在可以选择安装到哪些 Blender。** 找到多个 Blender 5.2+ 时，输入编号（空格分隔）选择，
-  或直接回车全部安装。脚本版本号改为从负载自动读取，不再硬编码。
-- **修复：渲染设置现在能正确恢复视图着色**（自 0.1.27）。在命名的渲染设置之间切换时，所有
-  `display.shading.*` 值（视图光照、颜色类型、背面剔除、X 光、阴影、腔体、轮廓、高光）会被静默跳过。
-  `render_settings.py` 中一行解析修复，项目自带的 headless 测试验证（修复前 `FAIL 1`，修复后 `ALL PASS`）。
-- **Windows + macOS 一键安装包**（见 [Releases 页面](https://github.com/luoboruodai/Blenda4D/releases) 的
-  `Blenda4D-0.1.28-OneClick-WinMac.zip`）：通过 Blender 官方扩展安装接口完成安装并启用，按版本逐个
-  报告结果。附卸载程序。全程无需手动操作，不写入 Blender 用户目录以外的任何位置。
-- **测试脚本修复**：让项目自带检查在 Blender 5.3 上跑完全程（`tools/tests/`）。
+  菜单、标签、管理器、工具、按钮和提示——全部显示 中文 English，与 Blender 自带字典同一风格。
+  约 1,670 条字符串译于 `blenda4d/translations.py`，覆盖上游 0.1.28 新功能；Blender 字典已覆盖的
+  词条仍由它显示，其他语言不受影响。
+- **修复：渲染设置现在能正确恢复视图着色**（自 0.1.27，上游 [PR #32](https://github.com/recon007jf/Blenda4D/pull/32)）。
+  切换命名渲染设置时所有 `display.shading.*` 值会被静默跳过。
+- **Windows + macOS 一键安装包，可选安装目标。** 找到多个 Blender 5.2+ 时输入编号（空格分隔）选择，
+  回车 = 全部；脚本版本号从负载自动读取。附卸载程序。
 
-已在 macOS 上用 Blender 5.2.2 LTS 与 5.3.0 Alpha 验证：双语界面经真实截图逐项核对、安装包的单选/多选/
-全装三条路径、完整 安装 → 卸载 → 重装 流程、项目 10 个 headless 测试套件（597 项检查）、真实界面冒烟
-测试（布局开/关还原）。Windows 安装脚本已通过静态检查，但尚未在真实 Windows 机器上运行——欢迎反馈。
+已在 macOS 上用 Blender 5.2.2 LTS 与 5.3.0 Alpha 验证：项目 10 个 headless 测试套件（597 项检查，
+0 失败）、双语界面与可见性修复经真实截图核对、安装包单选/多选/全装三条路径、完整 安装 → 卸载 →
+重装 流程。Windows 安装脚本已通过静态检查，但尚未在真实 Windows 机器上运行——欢迎反馈。
 
 ## 安装
 
@@ -43,7 +47,7 @@ Blenda 4D 用它自己的布局替换 Blender 的编辑器布局：命令栏、�
 
 1. 安装 [Blender 5.2 LTS](https://www.blender.org/download/) 或更高版本。
 2. 从 [最新 Release](https://github.com/luoboruodai/Blenda4D/releases/latest) 下载
-   **`Blenda4D-0.1.28-OneClick-WinMac.zip`** 并解压。
+   **`Blenda4D-0.2.0-OneClick-WinMac.zip`** 并解压。
 3. macOS 双击 **`Install Blenda4D (Mac).command`**（首次如被拦截：右键 → 打开）；
    Windows 双击 **`Install Blenda4D (Windows).bat`**。
 4. 重启 Blender，即自动进入 Blenda 4D 布局。右上角 **Blenda 4D | Blender** 开关可随时切换。
