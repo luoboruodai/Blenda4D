@@ -1,6 +1,14 @@
 # Blenda 4D
 
+**English** | [简体中文](README.zh-CN.md)
+
+> **This is a community fork** of [recon007jf/Blenda4D](https://github.com/recon007jf/Blenda4D) with a bug-fix
+> release (**0.1.28**) and a **one-click installer for Windows + macOS**. Everything else is the original project,
+> same GPL-3.0 licence. See [What's new in this fork](#whats-new-in-this-fork-0127).
+
 A free, open-source add-on that gives Blender a motion-design layout and workflow.
+
+![Blenda 4D layout in Blender 5.3](docs/images/blenda4d-layout.png)
 
 Blenda 4D replaces Blender's editor layout with its own: a command bar, tool columns, an **Object Manager**, an
 **Attribute Manager** that always shows what is selected, a **Material Manager**, an **Asset Browser**, a timeline
@@ -10,11 +18,57 @@ and saved layouts. Everything is drawn with Blender's own buttons, fields and me
 It is a plain Python add-on: no patched Blender, nothing to compile. It runs wherever Blender 5.2 LTS or later runs
 (Mac, Windows, Linux).
 
-## This project is yours
+## What's new in this fork (0.1.28)
 
-Blenda 4D was started by Joseph Fagan as a tool for his own work and is now handed to the community. There is no
-company behind it, no beta programme and no support desk. Use it, change it, fork it and ship your own builds under
-the licence below. [ROADMAP.md](ROADMAP.md) lists what isn't built yet; pull requests are how it gets better.
+- **Bilingual interface, following Blender's language.** With Blender's Simplified Chinese (bilingual) language,
+  Blenda 4D's own UI - menus, tabs, managers, tools, buttons and tooltips - now shows 中文 English everywhere,
+  the same style as Blender's own dictionary. About 1,550 strings are translated in `blenda4d/translations.py`;
+  anything Blender's dictionary already covers is left to it, and other languages are untouched.
+- **The one-click installer now lets you pick target Blenders.** When several Blender 5.2+ installs are found,
+  type the numbers you want (space separated) or press Enter for all. The scripts also read the version from the
+  payload itself, so the package no longer hardcodes it.
+- **Fix: Render Settings now restore viewport shading** (since 0.1.27). Switching between named render settings
+  silently skipped every `display.shading.*` value (viewport light, color type, backface culling, x-ray, shadows,
+  cavity, outline, specular highlight). One-line parsing fix in `render_settings.py`, verified by the project's
+  own headless test (was `FAIL 1`, now `ALL PASS`).
+- **One-click installer for Windows + macOS** (`Blenda4D-0.1.28-OneClick-WinMac.zip` on the
+  [Releases page](https://github.com/luoboruodai/Blenda4D/releases)): installs and enables Blenda 4D through
+  Blender's own extension installer, and reports per-version results. Uninstallers included. No manual steps,
+  nothing written outside Blender's user folders.
+- **Test-harness fixes** so the project's own checks run to completion on Blender 5.3 (`tools/tests/`).
+
+Verified on macOS with Blender 5.2.2 LTS and 5.3.0 Alpha: the bilingual UI checked on real screenshots, the
+installer's pick-one / pick-several / install-all paths, full install → uninstall → reinstall cycle, the project's
+10 headless test suites (597 checks), and a real-UI smoke test (layout on/off restore). The Windows installer
+scripts are statically checked but not yet run on a real Windows machine - reports welcome.
+
+## Install
+
+### The easy way: one-click installer (Windows + macOS)
+
+1. Install [Blender 5.2 LTS](https://www.blender.org/download/) or later.
+2. Download **`Blenda4D-0.1.28-OneClick-WinMac.zip`** from the
+   [latest release](https://github.com/luoboruodai/Blenda4D/releases/latest) and unzip it.
+3. Double-click **`Install Blenda4D (Mac).command`** on macOS (first time: right-click → Open), or
+   **`Install Blenda4D (Windows).bat`** on Windows.
+4. Restart Blender - it opens in the Blenda 4D layout. The **Blenda 4D | Blender** switch at the top right takes
+   you back and forth.
+
+To remove it later, double-click the matching **Uninstall** file. Your own layouts, files and other add-ons are
+untouched.
+
+### From Blender's extension list (automatic updates, upstream builds)
+
+1. In Blender: **Edit > Preferences > Get Extensions**, **Repositories** menu at the top right, **+ > Add Remote
+   Repository**, URL `https://blenda4d.com/extensions/index.json`, tick **Check for Updates on Startup**.
+2. Search for **Blenda 4D** in Get Extensions and click **Install**.
+
+### From a file (no automatic updates)
+
+Download the `blenda4d-…zip` from the [latest release](https://github.com/luoboruodai/Blenda4D/releases/latest),
+then in Blender: **Edit > Preferences > Add-ons > Install from Disk**.
+
+To run from a checkout instead, link or copy the `blenda4d/` folder into your Blender extensions or add-ons folder.
 
 ## What's in version 0.1
 
@@ -44,20 +98,6 @@ the licence below. [ROADMAP.md](ROADMAP.md) lists what isn't built yet; pull req
 - **Add-ons**: other add-ons' Add and Object menu items, their sidebar panels, and a Blender Properties window.
 - **Keymap**: a "Blenda 4D" keymap, selectable in Preferences > Keymap.
 
-## Install
-
-1. Install [Blender 5.2 LTS](https://www.blender.org/download/) or later.
-2. In Blender: **Edit > Preferences > Get Extensions**, **Repositories** menu at the top right, **+ > Add Remote
-   Repository**, URL `https://blenda4d.com/extensions/index.json`, tick **Check for Updates on Startup**.
-3. Search for **Blenda 4D** in Get Extensions and click **Install**. Blender shows an **Update** button whenever a new
-   version is out.
-4. The Blenda 4D layout opens. Use the **Blenda 4D | Blender** switch at the top right to go back and forth.
-
-Or install from a file (no automatic updates): download the `blenda4d-…zip` from the
-[latest release](https://github.com/recon007jf/Blenda4D/releases/latest), then **Add-ons > Install from Disk**.
-
-To run from a checkout instead, link or copy the `blenda4d/` folder into your Blender extensions or add-ons folder.
-
 ## Recommended plugins
 
 None of these plugins are required, but we recommend them to enhance your experience. Each is a separate product
@@ -74,6 +114,9 @@ with its own licence; nothing of theirs is included here.
 Read [AGENTS.md](AGENTS.md) first: the rules, how the add-on is built, how to test and the approved look. It doubles as
 the brief for AI coding assistants; `CLAUDE.md`, `.cursor/rules` and `.github/copilot-instructions.md` point to it, so
 Claude Code, Cursor and GitHub Copilot read it on their own.
+
+This fork's installer lives in `installer/`; `tools/build_oneclick.sh /path/to/Blender` rebuilds the one-click
+package from a checkout (the zip lands in `dist/`, which is not committed).
 
 ### Building it with an AI assistant
 
