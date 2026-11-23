@@ -173,7 +173,7 @@ def apply_values(scene, values):
     for key in first + [k for k in values if k not in first]:
         if key not in values:
             continue
-        kind, attr = key.split(".", 1)
+        kind, attr = key.rsplit(".", 1)
         own = _owner(scene, kind)
         if own is None or not hasattr(own, attr):
             continue
