@@ -39,7 +39,7 @@ NEW = {"render.engine": "CYCLES", "image.file_format": "JPEG", "image.color_mode
        "image.color_depth": None, "rs.override_material": None, "rs.frame_range": "MANUAL"}
 changed = {}
 for key, val in first.items():
-    kind, attr = key.split(".", 1)
+    kind, attr = key.rsplit(".", 1)
     own = rs._owner(scene, kind)
     if key in NEW:
         v = NEW[key]
