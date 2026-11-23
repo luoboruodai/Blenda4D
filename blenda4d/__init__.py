@@ -25,7 +25,8 @@ def _after_load(*_args):
 
 
 def register():
-    from . import keymap
+    from . import keymap, translations
+    translations.register()
     keymap.add_preset_path()
     settings.register()
     switch.register()
@@ -47,5 +48,6 @@ def unregister():
         bpy.app.handlers.load_post.remove(_after_load)
     switch.unregister()
     settings.unregister()
-    from . import keymap
+    from . import keymap, translations
     keymap.remove_preset_path()
+    translations.unregister()
