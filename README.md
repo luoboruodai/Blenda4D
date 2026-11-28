@@ -3,8 +3,8 @@
 **English** | [简体中文](README.zh-CN.md)
 
 > **This is a community fork** of [recon007jf/Blenda4D](https://github.com/recon007jf/Blenda4D) with a bug-fix
-> release (**0.2.0**) and a **one-click installer for Windows + macOS**. Everything else is the original project,
-> same GPL-3.0 licence. See [What's new in this fork](#whats-new-in-this-fork-020).
+> release (**0.2.1**) and a **one-click installer for Windows + macOS**. Everything else is the original project,
+> same GPL-3.0 licence. See [What's new in this fork](#whats-new-in-this-fork-021).
 
 A free, open-source add-on that gives Blender a motion-design layout and workflow.
 
@@ -18,39 +18,37 @@ and saved layouts. Everything is drawn with Blender's own buttons, fields and me
 It is a plain Python add-on: no patched Blender, nothing to compile. It runs wherever Blender 5.2 LTS or later runs
 (Mac, Windows, Linux).
 
-## What's new in this fork (0.2.0)
+## What's new in this fork (0.2.1)
 
-- **Rebased on upstream 0.1.28.** Everything upstream shipped in 0.1.27 and 0.1.28 is here: right-click menus,
-  Make Editable (C) on generators, Current State to Object, tag pages with Align to Spline, stacked visibility
-  dots, the Sculpt tag, UDIM tiles, the Material Manager between the viewport and the create column, safer panel
-  resizing and the Windows crash fixes. Upstream's own 0.1.28 build is Mac/Linux-only for now; this fork builds
-  from source, so the one-click package below also installs on Windows.
-- **Fix: re-enabling an object no longer leaves it hidden** (upstream regression, reported as
-  [PR #35](https://github.com/recon007jf/Blenda4D/pull/35)). Object Manager > Enabled off, then on, kept the
-  object hidden in viewport and renders for good - the new stacked dots mistook the master switch's own hide
-  write for the user's dot choice. The project's sky test went from 11 FAILs to ALL PASSED.
+- **Rebased on upstream 0.1.55.** Everything upstream shipped between 0.1.28 and 0.1.55 is here: MoClone's
+  generators (Fracture, Voronoi Fracture, MoText, MoExtrude, PolyFX, MoSpline, Tracer, MoInstance), the new
+  effectors and fields, HDRI drop-to-Sky takeover, Octane scene/material conversion, Material Manager
+  improvements, and original-preference restoration even after Blender auto-saves preferences in Blenda mode.
+- **Fix: Render Settings restore viewport shading.** Switching between named render settings silently skipped
+  every `display.shading.*` value (`render_settings.py` split compound keys at the first dot instead of the
+  right). Upstream 0.1.55 still has this bug; fixed here and verified by the project's own test.
+- **Test-harness alignment.** Updated the sky test to match upstream 0.1.5x's intentional design (deleting the
+  Sky leaves plain medium grey rather than restoring an earlier HDRI), and fixed the test split / mock view
+  pointer so the official headless suites run to completion.
 - **Bilingual interface, following Blender's language.** With Blender's Simplified Chinese (bilingual) language,
-  Blenda 4D's own UI - menus, tabs, managers, tools, buttons and tooltips - shows 中文 English everywhere,
-  the same style as Blender's own dictionary. About 1,670 strings in `blenda4d/translations.py`, covering
-  upstream 0.1.28's new features; whatever Blender's dictionary already covers is left to it, and other
-  languages are untouched.
-- **Fix: Render Settings restore viewport shading** (since 0.1.27, [PR #32](https://github.com/recon007jf/Blenda4D/pull/32)
-  upstream). Switching named render settings silently skipped every `display.shading.*` value.
-- **One-click installer for Windows + macOS, now with target selection.** When several Blender 5.2+ installs
-  are found, type the numbers you want (space separated) or press Enter for all; the scripts read the version
-  from the payload itself. Uninstallers included.
+  all of Blenda 4D's own UI - including the new MoClone effectors, fields and tools - shows 中文 English,
+  the same style as Blender's own dictionary (~2,170 strings in `blenda4d/translations.py`). Whatever Blender's
+  dictionary covers is left to it; other languages are untouched.
+- **One-click installer for Windows + macOS, with target selection.** Finds every Blender 5.2+ on the machine,
+  lets you pick which installs get it (Enter = all), installs and enables it through Blender's own extension
+  installer, and reports per-version results. Uninstallers included. Built on macOS; Linux not guaranteed.
 
 Verified on macOS with Blender 5.2.2 LTS and 5.3.0 Alpha: the project's 10 headless test suites (597 checks,
-0 FAIL), the bilingual UI and the visibility fix checked on real screenshots, the installer's pick-one /
-pick-several / install-all paths, and full install → uninstall → reinstall cycles. The Windows installer
-scripts are statically checked but not yet run on a real Windows machine - reports welcome.
+0 FAIL), the bilingual UI checked on real screenshots, the installer's pick-one / install-all paths, and full
+install → uninstall → reinstall cycles. The Windows installer scripts are statically checked but not yet run
+on a real Windows machine; Linux is not covered.
 
 ## Install
 
 ### The easy way: one-click installer (Windows + macOS)
 
 1. Install [Blender 5.2 LTS](https://www.blender.org/download/) or later.
-2. Download **`Blenda4D-0.2.0-OneClick-WinMac.zip`** from the
+2. Download **`Blenda4D-0.2.1-OneClick-WinMac.zip`** from the
    [latest release](https://github.com/luoboruodai/Blenda4D/releases/latest) and unzip it.
 3. Double-click **`Install Blenda4D (Mac).command`** on macOS (first time: right-click → Open), or
    **`Install Blenda4D (Windows).bat`** on Windows.
