@@ -1527,7 +1527,7 @@ class BLENDA4D_PT_attributes(roles.RolePanel, bpy.types.Panel):
         own = kinds.kind_of(ob)
         label = (kinds.KINDS[own]["label"] if own else
                  (primitives.PRIMS[kind][1] + " Object") if kind else TYPE_LABEL.get(ob.type, "Object"))
-        head.label(text=f"{label} [{ob.name}]", **type_icon_kw(ob))
+        head.label(text=f"{bpy.app.translations.pgettext_iface(label)} [{ob.name}]", **type_icon_kw(ob))
         if len(_page_tabs(ob)) > 5:                       # many pages: tabs wrap onto two rows of four
             tg = layout.grid_flow(row_major=True, columns=4, even_columns=True, align=True)
             for key, label, _d in _page_tabs(ob):
