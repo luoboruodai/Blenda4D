@@ -82,7 +82,7 @@ bpy.ops.blenda4d.add_kind(kind="sky")
 ob = bpy.context.view_layer.objects.active
 check(sky.is_sky(ob) and kinds.kind_of(ob) == "sky", "Sky object made and active")
 check(len(ob.data.vertices) == 0, "Sky has no geometry")
-check(scene.world == scene.b4d_sky_world and scene.b4d_sky_prev_world == first_world, "Sky took over the World, old kept")
+check(scene.world == scene.b4d_sky_world and scene.b4d_sky_prev_world is None, "Sky took over the World (no old World kept, 0.1.5x)")
 scene.b4d_sky_intensity = 1.0
 outs = [n for n in scene.world.node_tree.nodes if n.type == "OUTPUT_WORLD"]
 check(len(outs) == 1 and outs[0].inputs[0].is_linked and len(scene.world.node_tree.nodes) == 2, "the Sky's World: one output, its own nodes only")
@@ -167,7 +167,7 @@ check(sky.physical_node(scene).outputs[0].is_linked, "HDRI cleared: the Physical
 sky_world = scene.b4d_sky_world.name
 bpy.data.objects.remove(ob)
 sky.sync(scene)
-check(scene.world == first_world, "deleting the Sky gives back the old World")
+check(scene.world != first_world and scene.world.name == "No Sky", "deleting the Sky leaves plain medium grey (0.1.5x)")
 check(sky_world not in bpy.data.worlds, "the Sky's World is removed")
 check(scene.b4d_sky_image is None and scene.get("b4d_sky_views") == -1, "settings and views back to defaults")
 bpy.ops.blenda4d.add_kind(kind="sky")
